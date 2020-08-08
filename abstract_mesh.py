@@ -18,7 +18,6 @@ class AbstractMesh:
     
     """
     def __init__(self):
-        print("Init abstract")
         self.dof_counter = 0
     
     def construct_matrices(self):
