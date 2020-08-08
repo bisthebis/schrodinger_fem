@@ -15,10 +15,11 @@ m = 9.109e-31
 class LinearElement:
     """Linear FEM element"""
     def __init__(self, x0, x1, ddls):
+        super().__init__()
         self.ddls = ddls
         self.x0 = x0
         self.x1 = x1
-        self.L = x1 - x0
+        self.L = np.absolute(x1 - x0)
         
         self.K = None
         self.M = None
@@ -44,3 +45,15 @@ class LinearElement:
         if self.V0 is None:
             raise ValueError("Element has unimplemented potential")
         return (hbar*hbar/(2*m) * self.get_stiffness() + self.V0 * self.get_mass())
+
+
+class LinearElementBoundary(LinearElement):
+    """Linear FEM element with a single DOF (the other being set to 0)"""
+    def __init__(self, x0, x1, ddls):
+        super().__init__(x0, x1, ddls)
+        
+    def compute_stiffness(self):
+        self.K = 1/self.L * np.matrix([[1]])
+
+    def compute_mass(self):
+        self.M = self.L * np.matrix([[1/3]])
