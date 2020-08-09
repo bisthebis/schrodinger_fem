@@ -24,8 +24,9 @@ p_caract = hbar/x_caract
 
 class MeshHO(AbstractMesh):
     
-    def __init__(self):
-        self.construct(300, 0.02)
+    def __init__(self, nb_elems, precision):
+        super().__init__()
+        self.construct(nb_elems, precision)
         
     def construct(self, N, precision):
         """Precision = Element lenth in multiples of x_caract"""
@@ -47,9 +48,9 @@ class MeshHO(AbstractMesh):
 
             
             
-
-mesh = MeshHO()
-eigvals, eigvecs = eigh(mesh.H, mesh.M, eigvals_only=False)
-for i in sorted(eigvals)[0:20]:
-    print("%2.5f eV" % (i/eV))
-            
+if __name__ == "main":
+    mesh = MeshHO(300, 0.02)
+    eigvals, eigvecs = eigh(mesh.H, mesh.M, eigvals_only=False)
+    for i in sorted(eigvals)[0:20]:
+        print("%2.5f eV" % (i/eV))
+                
