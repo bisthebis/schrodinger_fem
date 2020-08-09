@@ -12,8 +12,8 @@ import numpy as np
 from scipy.linalg import eigh
 import matplotlib.pyplot as plt
 
-eV = 1.602e-1 #kg*nm^2/s^2
-hbar = 1.054e-16 #kg*mm^2/s
+eV = 1.602e-1  # kg*nm^2/s^2
+hbar = 1.054e-16  # kg*mm^2/s
 nm = 1
 m = 9.109e-31
 
@@ -24,19 +24,24 @@ mesh = MeshPotentialWell(nm, N)
 H = mesh.H
 M = mesh.M
 
-# States are M-normalized : for all x in eigvecs, x*M*x = 1. Thus, x*H*x = the eigenvalue
+# States are M-normalized : for all x in eigvecs, x*M*x = 1.
+# Thus, x*H*x = the eigenvalue
 eigvals, eigvecs = eigh(mesh.H, mesh.M, eigvals_only=False)
 
 initial_state = (eigvecs[:, 0] + eigvecs[:, 1]) * 2**-0.5
 
+
 def schrodinger_derivative(q, H, M):
-    #i hbar M dq/dt = Hq
+    # i hbar M dq/dt = Hq
     Mdq_dt = -1j/hbar * H.dot(q)
     dq_dt = solve(M, Mdq_dt)
     return dq_dt
 
 def state_norm(q, M):
     return np.vdot(q, M.dot(q))**0.5
+
+dy = schrodinger_derivative(initial_state, H, M)
+dt = 1e-17  # secondes
 
 def normalized(q, M):
     return q / state_norm(q, M)
@@ -106,3 +111,4 @@ def run_semi_implicit(theta):
 #run_explicit()
 for theta in [0.4999, 0.5, 0.5001]:
     run_semi_implicit(theta)
+
