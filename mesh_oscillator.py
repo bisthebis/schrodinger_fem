@@ -39,7 +39,7 @@ class MeshHO(AbstractMesh):
             x0 = e*x_caract*precision
             x1 = (e+1)*x_caract*precision
 
-            elem = LinearElement(x0, x1, [e+N, e+N+1])
+            elem = LinearElement(x0, x1, [self.current_DOF(), self.next_DOF()])
             elem.V0 = 0.5*m*w*w*((x1+x0)/2)**2
             self.elements.append(elem)
 
