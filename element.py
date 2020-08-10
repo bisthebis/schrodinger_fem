@@ -16,7 +16,6 @@ class LinearElement:
     """Linear FEM element"""
 
     def __init__(self, x0, x1, ddls):
-        super().__init__()
         self.ddls = ddls
         self.x0 = x0
         self.x1 = x1
