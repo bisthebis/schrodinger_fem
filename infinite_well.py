@@ -27,7 +27,6 @@ class MeshPotentialWell(AbstractMesh):
 
     def construct(self):
         """Precision = Element lenth in multiples of x_caract"""
-        self.dofs = self.nb_elem + 1  # Not taking in account boundary cond
         self.elements = []
 
         element_length = self.L / self.nb_elem
