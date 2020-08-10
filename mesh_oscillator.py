@@ -32,7 +32,7 @@ class MeshHO(AbstractMesh):
     def construct(self, N, precision):
         """Precision = Element lenth in multiples of x_caract"""
         # nb_elem = 2*N  # assignment never used
-        self.dofs = 2*N+1
+        self.dof_counter = 2*N+1
         self.elements = []
 
         for e in range(-N, N):

@@ -56,5 +56,5 @@ if __name__ == "__main__":
     mesh = MeshPotentialWell(L, 500)
     eigvals, eigvecs = eigh(mesh.H, mesh.M, eigvals_only=False)
     for i, E in enumerate(sorted(eigvals)[0:20], start=1):
-        print("%d : %2.3f eV = %2.3f E_1. Ratio par rapport à la valeur \
-              théorique : %2.5f" % (i, E/eV, E/E_1, E/E_1/i**2))
+        print("%d : %2.3f eV = %2.3f E_1. Ratio par rapport à la valeur"
+              "théorique : %2.5f" % (i, E/eV, E/E_1, E/E_1/i**2))
