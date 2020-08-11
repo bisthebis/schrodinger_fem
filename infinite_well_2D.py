@@ -9,14 +9,18 @@ Created on Mon Aug 10 23:09:02 2020
 from abstract_mesh import AbstractMesh
 from element_2D import RectangleElement
 import numpy as np
-
+from scipy.linalg import eigh
 
 eV = 1.602e-1  # kg*nm^2/s^2
 hbar = 1.054e-16  # kg*mm^2/s
 nm = 1
 m = 9.109e-31
 
-
+"""
+TODO:
+    improve removing of boundary DOFs by creating boundary element like in 1D
+    improve computation time by preallocating?
+"""
 
 class MeshPotentialWell2D(AbstractMesh):
 
@@ -63,7 +67,7 @@ if __name__ == "__main__":
     width = nm
     height = 1.5*nm
     nx = 40 #Number of rectangles in x-axis
-    ny = 40
+    ny = 60
     
     E_1_1 = (hbar * np.pi) **2 / (2 * m) * (1 / width**2 + 1 / height**2)
     print("Energie min : %2.3f eV" % (E_1_1 / eV))
@@ -75,3 +79,43 @@ if __name__ == "__main__":
     eigvals, eigvecs = eigh(mesh.H, mesh.M, eigvals_only=False)
     for i, E in enumerate(sorted(eigvals)[0:20], start=1):
         print("%d : %2.3f eV = %2.3f E_1." % (i, E/eV, E/E_1_1))
+
+"""
+Theorical eigen-energies: (may have skipped some)
+
+nx, ny: E/E1
+1, 1: 1
+1, 2: 1.92
+1, 3: 3.46
+1, 4: 5.62
+2, 1: 3.07
+2, 2: 4
+2, 3: 5.54
+2, 4: 7.69
+3, 1: 6.54
+3, 2: 7.46
+3, 3: 9
+3, 4: 11.15
+4, 1: 11.38
+4, 2: 12.31
+4, 3: 13.85
+4, 4: 16
+
+n, nx, ny: E/E1
+1, 1, 1: 1
+2, 1, 2: 1.92
+3, 2, 1: 3.07
+4, 1, 3: 3.46
+5, 2, 2: 4
+6, 2, 3: 5.54
+7, 1, 4: 5.62
+8, 3, 1: 6.54
+9, 3, 2: 7.46
+10, 2, 4: 7.69
+11, 3, 3: 9
+12, 3, 4: 11.15
+13, 4, 1: 11.38
+14, 4, 2: 12.31
+15, 4, 3: 13.85
+16, 4, 4: 16
+"""
