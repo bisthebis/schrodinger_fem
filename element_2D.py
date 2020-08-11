@@ -101,11 +101,11 @@ class RectangleElement:
         a = self.a
         b = self.b
         self.K = 0.5 * np.matrix([
-                [a/b + b/a, -b/a, -a/b, 0], 
-                [-b/a, b/a, 0, 0],
-                [-a/b, 0, 2*a/b, -b/a],
-                [0, -a/b, -b/a, a/b+b/a]
-                ])
+                [a/b + b/a, -b/a, -a/b, 0],
+                [-b/a, b/a+a/b, 0, -b/a],
+                [-a/b, 0, a/b+b/a, -a/b],
+                [0, -b/a, -a/b, a/b+b/a]
+            ])
 
     def get_mass(self):
         if self.M is None:
