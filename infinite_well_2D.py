@@ -69,8 +69,10 @@ if __name__ == "__main__":
     nx = 40 #Number of rectangles in x-axis
     ny = 60
     
-    E_1_1 = (hbar * np.pi) **2 / (2 * m) * (1 / width**2 + 1 / height**2)
+    E0 = (hbar * np.pi) **2 / (2 * m)
+    E_1_1 = E0 * (1 / width**2 + 1 / height**2)
     print("Energie min : %2.3f eV" % (E_1_1 / eV))
+    expected_energies = sorted([E0 * (((x+1)/width)**2 + ((y+1)/height)**2) for x, y in np.ndindex(nx, ny)])
     
     # Element size
     w = width / nx
@@ -78,44 +80,5 @@ if __name__ == "__main__":
     mesh = MeshPotentialWell2D(w, h, nx, ny)
     eigvals, eigvecs = eigh(mesh.H, mesh.M, eigvals_only=False)
     for i, E in enumerate(sorted(eigvals)[0:20], start=1):
-        print("%d : %2.3f eV = %2.3f E_1." % (i, E/eV, E/E_1_1))
+        print("%d : %2.3f eV. Expected : %2.3f eV. Excess : %2.3f %%" % (i, E/eV, expected_energies[i-1]/eV, 100 * (E / expected_energies[i-1] - 1)))
 
-"""
-Theorical eigen-energies: (may have skipped some)
-
-nx, ny: E/E1
-1, 1: 1
-1, 2: 1.92
-1, 3: 3.46
-1, 4: 5.62
-2, 1: 3.07
-2, 2: 4
-2, 3: 5.54
-2, 4: 7.69
-3, 1: 6.54
-3, 2: 7.46
-3, 3: 9
-3, 4: 11.15
-4, 1: 11.38
-4, 2: 12.31
-4, 3: 13.85
-4, 4: 16
-
-n, nx, ny: E/E1
-1, 1, 1: 1
-2, 1, 2: 1.92
-3, 2, 1: 3.07
-4, 1, 3: 3.46
-5, 2, 2: 4
-6, 2, 3: 5.54
-7, 1, 4: 5.62
-8, 3, 1: 6.54
-9, 3, 2: 7.46
-10, 2, 4: 7.69
-11, 3, 3: 9
-12, 3, 4: 11.15
-13, 4, 1: 11.38
-14, 4, 2: 12.31
-15, 4, 3: 13.85
-16, 4, 4: 16
-"""
