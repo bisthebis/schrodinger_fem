@@ -151,7 +151,7 @@ class RectangleElementBoundary(RectangleElement):
     def compute_mass(self):
         if self.elem_type == 0:
             self.M = self.a * self.b / 12 * np.matrix([1])
-        elif self.elem_type in  (1, 2):
+        elif self.elem_type in (1, 2):
             self.M = self.a * self.b / 12 * np.matrix([
                     [1, 1/2],
                     [1/2, 2],
