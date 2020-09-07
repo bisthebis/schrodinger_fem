@@ -127,10 +127,10 @@ class BilinearQuadrangleElement():
         for i in range(0, 4):
             for j in range(0, 4):
                 if mode == 'reduced':
-                   self.K[i, j] = 4 * np.linalg.det(self.eval_jacobian_matrix(0,0))
+                   self.M[i, j] = 4 * np.linalg.det(self.eval_jacobian_matrix(0,0))
                 elif mode == "standard":
                    
-                   self.K[i, j] = Ni[i](-gp, -gp) * Ni[j](-gp, -gp) * np.linalg.det(self.eval_jacobian_matrix(-gp, -gp)) + \
+                   self.M[i, j] = Ni[i](-gp, -gp) * Ni[j](-gp, -gp) * np.linalg.det(self.eval_jacobian_matrix(-gp, -gp)) + \
                                    Ni[i](gp, gp) * Ni[j](gp, gp) * np.linalg.det(self.eval_jacobian_matrix(gp, gp)) + \
                                    Ni[i](-gp, gp) * Ni[j](-gp, gp) * np.linalg.det(self.eval_jacobian_matrix(-gp, gp)) + \
                                    Ni[i](gp, -gp) * Ni[j](gp, -gp) * np.linalg.det(self.eval_jacobian_matrix(gp, -gp))

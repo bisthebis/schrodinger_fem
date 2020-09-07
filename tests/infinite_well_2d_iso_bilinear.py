@@ -50,13 +50,7 @@ class MeshPotentialWell2D(AbstractMesh):
                 
                 elem = BilinearQuadrangleElement([(x,y), (x+w, y), (x+w, y+h), (x, y+h)],
                                                   [i + (nx + 1) * j, i + 1 + (nx + 1) * j, i + 1 + (nx + 1) * (j + 1), i + (nx + 1) * (j + 1)])
-                
-                elem = RectangleElement(x, y, w, h,
-                                        [i + j * (nx + 1),
-                                         i + j * (nx + 1) + 1,
-                                         (i + 1) + (j + 1) * (nx + 1),
-                                         i + (j + 1) * (nx + 1)])
-                
+
                 
                 elem.V0 = 0
                 self.elements.append(elem)
