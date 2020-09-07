@@ -118,9 +118,9 @@ class MeshPotentialWell2D(AbstractMesh):
 
 if __name__ == "__main__":
     width = nm
-    height = 1.5*nm
-    nx = 100  # Number of rectangles in x-axis
-    ny = 100
+    height = nm
+    nx = 30  # Number of rectangles in x-axis
+    ny = 30
 
     E0 = (hbar * np.pi) ** 2 / (2 * m)
     E_1_1 = E0 * (1 / width**2 + 1 / height**2)
